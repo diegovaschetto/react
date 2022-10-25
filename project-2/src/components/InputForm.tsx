@@ -1,28 +1,33 @@
-import { Paper } from "@mui/material";
-import React, { SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
+import { Button, Paper } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
 
 export const InputForm = () => {
-    const [url, setUrl] = useState("")
-    let staticUrl = `/${url}`
+    const [currentSearch, setCurrentSearch] = useSearchParams()
 
-    const onSubmit =()=> {
-        setUrl("")
+    const setQuery =(query:string)=> {
+        setCurrentSearch({search : query})
     }
+
+    const url = useCallback(()=>{
+        return currentSearch.get("search")?.trim() || ""
+    },[])
+
+    
+    const isDisabled = () => currentSearch.get("search")?.trim().length === 0
 
     return (
         <>
             <Paper  component="form" onSubmit={(e:React.FormEvent<HTMLFormElement>)=>e.preventDefault()} elevation={3}>
                 <input
-                    value={url}
-                    onChange={(e) => {
-                        setUrl(e.target.value);
-                    }}
+                    value={currentSearch!.get("search") || ""}
+                    onChange={(e)=>setQuery(e.target.value)}
                     type="text"
                 />
-                <Link role={"button"} onClick={onSubmit} to={staticUrl}>Cerca
-                </Link>
+                <Button disabled={isDisabled()}><Link role={"button"}  to={url()}>Cerca
+                </Link></Button>
+                
             </Paper>
         </>
     );

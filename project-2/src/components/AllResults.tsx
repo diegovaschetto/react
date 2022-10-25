@@ -34,7 +34,7 @@ export const AllResults = (prop: PropType ) => {
     });
     return (
         <>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 2, md: 4, lg: 2 }}>
+            <Grid style={{marginTop:"200px"}} container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 2, md: 4, lg: 2 }}>
                 {listOfResults}
             </Grid>
         </>
