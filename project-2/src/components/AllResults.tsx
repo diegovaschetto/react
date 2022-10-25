@@ -1,4 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { ResultsMapped } from "../api/allResults";
 
 type PropType = {
@@ -6,9 +7,11 @@ type PropType = {
 }
 
 export const AllResults = (prop: PropType ) => {
-    const listOfResults = prop.allResults.map((show: ResultsMapped) => {
+    const listOfResults = prop.allResults.map((show: ResultsMapped, key: number) => {
+        const detailsSegment= "/result/"+ show.id; 
         return (
-            <Grid style={{marginTop:"100px"}} item>
+                <Link to={detailsSegment} key={key}>
+            <Grid style={{marginTop:"100px"}} item >
                 <Card>
                     <CardMedia
                         component="img"
@@ -26,6 +29,7 @@ export const AllResults = (prop: PropType ) => {
                     </CardActions>
                 </Card>
             </Grid>
+            </Link>
         );
     });
     return (

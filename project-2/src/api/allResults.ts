@@ -3,6 +3,7 @@ export type ResultsApi = {
 };
 
 export type ResultsMapped = {
+    id: number;
     url: string;
     name: string;
     image: {
@@ -10,11 +11,21 @@ export type ResultsMapped = {
     };
 }
 
+export type ResultMapped = {
+    name: string
+    type:string
+    image:{
+        medium?: string
+    }
+    summary: string
+}
+
 export const callToApi = async (textSearch: string) => {
-    const urlBase = "https://api.tvmaze.com/search/shows?q=";
-    const response = await fetch(urlBase + textSearch);
+    const urlBaseGenerics = "https://api.tvmaze.com/search/shows?q=";
+    const response = await fetch(urlBaseGenerics + textSearch);
     const data: ResultsApi[] = await response.json();
     const mappedData: ResultsMapped[] = data.map((current: ResultsApi) => ({
+        id: current.show.id,
         url: current.show.url,
         name: current.show.name,
         image: {
@@ -23,3 +34,13 @@ export const callToApi = async (textSearch: string) => {
     }));
     return mappedData;
 };
+
+
+export const callToApiDetails =async (id:string) => {
+    const urlBaseDetails = "https://api.tvmaze.com/shows/";
+    
+        const response = await fetch(urlBaseDetails + id);
+        const data: ResultMapped = await response.json();
+        return data
+    
+}
