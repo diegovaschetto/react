@@ -8,7 +8,7 @@ type PropType = {
 
 export const AllResults = (prop: PropType ) => {
     const listOfResults = prop.allResults.map((show: ResultsMapped, key: number) => {
-        const detailsSegment= "/result/"+ show.id; 
+        const detailsSegment= show.id.toString(); 
         return (
                 <Link to={detailsSegment} key={key}>
             <Grid style={{marginTop:"100px"}} item >

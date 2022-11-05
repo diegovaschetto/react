@@ -9,7 +9,6 @@ export const Result = () => {
     const [resultData, setResultData] = useState<ResultMapped>()
     
     useEffect(()=>{
-        console.log(result)
         callToApiDetails(result!).then((response)=>{
             setResultData(response)
         })
