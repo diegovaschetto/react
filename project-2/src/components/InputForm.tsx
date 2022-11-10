@@ -6,13 +6,12 @@ import { Link, useSearchParams } from "react-router-dom";
 export const InputForm = () => {
     const [currentSearch, setCurrentSearch] = useSearchParams()
 
-    const setQuery =(query:string)=> {
+    const setQuery = useCallback((query:string)=> {
         setCurrentSearch({search : query})
-    }
+    },[setCurrentSearch])
 
-    const url = useCallback(()=>{
-        return currentSearch.get("search")?.trim() || ""
-    },[])
+    const url = ()=>{
+        return currentSearch.get("search")?.trim() || ""}
 
     
     const isDisabled = () => currentSearch.get("search")?.trim().length === 0

@@ -10,10 +10,8 @@ const App = () => {
         <>
             <Routes>
                 <Route index element={<InputForm />}></Route>
-                <Route path="/:results" element={<Results />}>
-                </Route>
-                    <Route path="/result/:result" element={<Result />}></Route>
-
+                <Route path="/:results" element={<Results />}></Route>
+                <Route path="/result/:result" element={<Result />}></Route>
             </Routes>
         </>
     );
