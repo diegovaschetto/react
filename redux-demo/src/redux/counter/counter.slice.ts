@@ -4,11 +4,11 @@ export type CounterStateType = {
     value:number
 }
 
-const initialState:CounterStateType ={
+const initialState:CounterStateType = {
     value:0
 }
 
-export const counterSlice = createSlice({name: "counter",initialState : initialState, reducers:{
+export const counterSlice = createSlice({name: "counter", initialState , reducers:{
     increment: (state)=>{
         state.value++
     },
