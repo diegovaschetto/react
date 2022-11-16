@@ -1,13 +1,12 @@
-import { Signup } from "./Signup"
-
+import { Signup } from "./Signup";
+import { Login } from "./Login";
 
 function App() {
-
-  return (
-    <>
-      <Signup/>
-    </>
-  )
+    return (
+        <>
+            <Login />
+        </>
+    );
 }
 
-export default App
+export default App;
