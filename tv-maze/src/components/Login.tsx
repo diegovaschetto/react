@@ -1,12 +1,14 @@
-import { auth } from "../../firebase";
-import { ui, uiConfig } from "../../firebase";
-
-ui.start("#firebaseui-auth-container", uiConfig);
+import { useEffect } from "react";
+import { ui, uiConfig } from "../service/firebase.auth";
 
 export const Login = () => {
+    useEffect(() => {
+        ui.start("#firebaseui-auth-container", uiConfig);
+        return () => { ui.reset() }
+    }, [])
+
     return (
         <>
-            <h1>Welcome to My Awesome App</h1>
             <div id="firebaseui-auth-container" ></div>
         </>
     );

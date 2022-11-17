@@ -17,6 +17,6 @@
     "jsx": "react-jsx",
     "types": ["vite/client"]
   },
-  "include": ["src", "firebase.ts"],
+  "include": ["src", "src/service/firebase.auth.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

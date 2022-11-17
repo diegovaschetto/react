@@ -1,14 +1,26 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+
+import { auth } from "../service/firebase.init";
 
 interface PropType {
-    children : React.ReactNode
+    children: React.ReactNode
 }
 
-const AuthContext = createContext(false);
+export const AuthContext = createContext<any>(false);
 
-export const AuthProvider = (prop : PropType) => {
-    return <><AuthContext.Provider value={}>
+export const AuthProvider = (prop: PropType) => {
+
+
+    const [currentUser, setCurrentUser] = useState<any>(false)
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user: any) => { setCurrentUser(user); console.log(user) }
+        );
+    }, [])
+    return (<>
+        <AuthContext.Provider value={currentUser}>
             {prop.children}
-    </AuthContext.Provider>
-    </>;
+        </AuthContext.Provider>
+    </>);
 };

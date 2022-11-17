@@ -1,7 +1,11 @@
-import React from 'react'
+import { AuthContext } from "./AuthProvider";
 
 export const Home =()=> {
   return (
-    <div>Home</div>
+
+    <AuthContext.Consumer>
+      {current=> (<p>{current.uid}</p>)}
+    </AuthContext.Consumer>
+
   )
 }
