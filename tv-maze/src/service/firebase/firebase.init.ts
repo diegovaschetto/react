@@ -1,6 +1,8 @@
 import  {initializeApp}  from "firebase/app";
-import "firebase/auth"
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+
+import "firebase/auth"
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,6 +17,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app)
+const database = getDatabase(app);
 
-export { auth }
+auth.useDeviceLanguage();
+
+export { auth , database }
 export default app

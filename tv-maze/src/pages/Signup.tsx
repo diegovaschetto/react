@@ -1,4 +1,4 @@
-import { auth } from "../service/firebase.auth";
+import { auth } from "../service/firebase/firebase.auth";
 
 //form 
 import { useForm } from "react-hook-form";
