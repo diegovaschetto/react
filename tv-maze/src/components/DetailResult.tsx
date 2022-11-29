@@ -1,20 +1,21 @@
 import { Button, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../components/AuthProvider";
+import { AuthContext } from "./AuthProvider";
 import { callToApiDetails, ResultMapped } from "../service/api.service";
 import { store } from "../service/redux/store";
 
 import { addToPreferList, removeToPreferlist } from "../service/firebase/firebase.db";
 
-export const DetailResult = () => {
-    const { id } = useParams();
-    const [resultData, setResultData] = useState<ResultMapped>();
-    const currentUser = useContext(AuthContext);
-    const [addToPrefer, setAddToPrefer] = useState(false);
-    const [keyShow, setKeyShow] = useState("");
-    const navigate = useNavigate();
+interface PropsType {
+    id: string;
+}
 
+export const DetailResult = ({ id }: PropsType) => {
+    const [resultData, setResultData] = useState<ResultMapped>();
+    const [keyShow, setKeyShow] = useState<string>();
+    const [addToPrefer, setAddToPrefer] = useState(false);
+
+    const currentUser = useContext(AuthContext);
     const { uid } = currentUser;
 
     useEffect(() => {
@@ -29,16 +30,25 @@ export const DetailResult = () => {
         for (const key in showsList) {
             if (showsList[key] === Number(id)) {
                 if (!keyShow) {
-                    setAddToPrefer(true)
+                    setAddToPrefer(true);
                 }
                 setKeyShow(key);
             }
         }
     }, [addToPrefer]);
 
+    const handleAddShow = () => {
+        setAddToPrefer(true);
+        addToPreferList(uid, resultData?.id!);
+    };
+
+    const handleRemoveShow = () => {
+        setAddToPrefer(false);
+        removeToPreferlist(uid, keyShow!);
+    };
+
     return (
         <>
-            <Button onClick={() => navigate(-1)}>Home</Button>
             <Grid style={{ marginTop: "100px" }} item>
                 <Card>
                     <CardMedia component="img" height="140" width="100" image={resultData?.image?.medium} />
@@ -52,26 +62,8 @@ export const DetailResult = () => {
                         <Typography gutterBottom component="p">
                             {resultData?.summary.replace(/<\/?[a-z]>/g, "")}
                         </Typography>
-                        {!addToPrefer && (
-                            <Button
-                                onClick={() => {
-                                    setAddToPrefer(true);
-                                    addToPreferList(uid, resultData?.id!);
-                                }}
-                            >
-                                + Add to Prefer List
-                            </Button>
-                        )}
-                        {addToPrefer && (
-                            <Button
-                                onClick={() => {
-                                    setAddToPrefer(false);
-                                    removeToPreferlist(uid, keyShow);
-                                }}
-                            >
-                                Dismiss to Prefer List
-                            </Button>
-                        )}
+                        {!addToPrefer && <Button onClick={handleAddShow}>+ Add to Prefer List</Button>}
+                        {addToPrefer && <Button onClick={handleRemoveShow}>Dismiss to Prefer List</Button>}
                     </CardContent>
                 </Card>
             </Grid>

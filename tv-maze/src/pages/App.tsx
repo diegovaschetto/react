@@ -6,7 +6,7 @@ import { PublicRoute } from "../components/PublicRoute";
 import { AuthProvider } from "../components/AuthProvider";
 
 import { Route, Navigate, Routes, BrowserRouter as Router } from "react-router-dom";
-import { DetailResult } from "./DetailResult";
+import { DetailsPage } from "./DetailsPage";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                     <Route element={<PrivateRoute />}>
                         <Route path="home" element={<Home />} />
                         <Route path=":search" element={<Home />} />
-                        <Route path=":search/:id" element={<DetailResult />}/>
+                        <Route path=":search/:id" element={<DetailsPage />}/>
                     </Route>
                 </Routes>
             </Router>

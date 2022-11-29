@@ -1,25 +1,31 @@
 import { SearchForm } from "../components/SearchForm";
 import { ResultsList } from "../components/ResultsList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { callToApi, ResultsMapped } from "../service/api.service";
+import { Container } from "@mui/material";
 
 export const Home = () => {
     const [searchParams, setSearchParams] = useSearchParams({ search: "" });
+    const { search } = useParams();
     const navigate = useNavigate();
 
-    const [isSearched, setIsSearched] = useState(false);
-    const [inputSearch, setInputSearch] = useState("");
     const [allResults, setAllResults] = useState<any>([]);
 
+    useEffect(() => {
+        if (search) {
+            callToApi(search).then((mappedData: ResultsMapped[]) => {
+                mappedData.length ? setAllResults(mappedData) : setAllResults([]);
+            });
+        }
+    }, [search]);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputSearch(event.target.value);
         setSearchParams({ search: event.target.value });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSearched(true);
-        setInputSearch("");
         navigate(`/${searchParams.get("search")?.trim()}`);
     };
 
@@ -29,13 +35,10 @@ export const Home = () => {
 
     return (
         <>
-            <SearchForm
-                onChange={handleChange}
-                inputSearch={inputSearch}
-                onSubmit={handleSubmit}
-                isDisabled={handleDisabled()}
-            />
-            {isSearched && <ResultsList setAllResults={setAllResults} allResults={allResults} />}
+            <Container>
+                <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled()} />
+                {allResults.length ? <ResultsList allResults={allResults} /> : <p>nessun risultato</p>}
+            </Container>
         </>
     );
 };

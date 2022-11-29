@@ -1,16 +1,10 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { callToApi, ResultsMapped } from "../service/api.service";
+import { Link } from "react-router-dom";
+import { ResultsMapped } from "../service/api.service";
 
 export const ResultsList = (props: any) => {
-    const { search } = useParams();
 
-    const { allResults, setAllResults } = props;
-
-    useEffect(() => {
-        callToApi(search!).then((mappedData: ResultsMapped[]) => {setAllResults(mappedData);});
-    }, [search]);
+    const { allResults } = props;
 
     const listOfResults = allResults.map((show: ResultsMapped, key: number) => {
         const detailsSegment = show.id.toString();
