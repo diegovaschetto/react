@@ -8,32 +8,38 @@ export const ResultsList = (props: any) => {
   const listOfResults = allResults.map((show: ResultsMapped, key: number) => {
     const detailsSegment = show.id.toString();
     return (
-        <Grid item xs={10} sm={10}>
-            <Link to={`./${detailsSegment}`} key={key}>
-          <CardActionArea>
-            <CardMedia component="img" image={show.image.medium} />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {show.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
-                continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary" role={"button"}>
-              Dettagli Show
-            </Button>
-          </CardActions>
-      </Link>
-        </Grid>
+      <Grid item xs={10} sm={6} md={3}>
+        <Link to={`./${detailsSegment}`} key={key}>
+          <Card variant="outlined">
+            <CardActionArea>
+              <CardMedia component="img" image={show.image.medium} />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {show.name}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button size="small" color="primary" role={"button"}>
+                Dettagli Show
+              </Button>
+            </CardActions>
+          </Card>
+        </Link>
+      </Grid>
     );
   });
   return (
     <>
-      <Grid container flexDirection="column" justifyContent="center" alignItems="center">
+      <Grid
+        container
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        rowSpacing={3}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        sx={{my:2}}
+      >
         {listOfResults}
       </Grid>
     </>

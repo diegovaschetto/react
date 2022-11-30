@@ -15,7 +15,7 @@ export const SearchForm = (props: any) => {
     const { onChange, onSubmit, isDisabled } = props;
     return (
         <>
-            <Paper component={"form"} elevation={0} className="flex justify-center mt-2" noValidate onSubmit={onSubmit}>
+            <Paper component={"form"} elevation={0} className="flex justify-center mt-2" sx={{my:3}} noValidate onSubmit={onSubmit}>
                 <FormControl  className="w-full md:w-2/4" variant="outlined">
                     <InputLabel htmlFor="search">Cerca show</InputLabel>
                     <OutlinedInput
