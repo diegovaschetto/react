@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { retrieveShows } from "../service/redux/showsList.slice";
 import { onValue, ref } from "firebase/database";
 import { database } from "../service/firebase/firebase.init";
+import { Container } from "@mui/material";
 
 export const PrivateRoute = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const PrivateRoute = () => {
                 }
             });
         
-        return <Outlet />;
+        return <Container><Outlet /></Container>;
     }
     return <Navigate to="login" />;
 };

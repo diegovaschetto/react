@@ -1,41 +1,41 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ResultsMapped } from "../service/api.service";
 
 export const ResultsList = (props: any) => {
+  const { allResults } = props;
 
-    const { allResults } = props;
-
-    const listOfResults = allResults.map((show: ResultsMapped, key: number) => {
-        const detailsSegment = show.id.toString();
-        return (
-            <Link to={`./${detailsSegment}`} key={key}>
-                <Grid style={{ marginTop: "100px" }} item>
-                    <Card>
-                        <CardMedia component="img" height="140" width="100" image={show.image.medium} />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {show.name}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Learn More</Button>
-                        </CardActions>
-                    </Card>
-                </Grid>
-            </Link>
-        );
-    });
+  const listOfResults = allResults.map((show: ResultsMapped, key: number) => {
+    const detailsSegment = show.id.toString();
     return (
-        <>
-            <Grid
-                style={{ marginTop: "200px" }}
-                container
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 1, sm: 2, md: 4, lg: 2 }}
-            >
-                {listOfResults}
-            </Grid>
-        </>
+        <Grid item xs={10} sm={10}>
+            <Link to={`./${detailsSegment}`} key={key}>
+          <CardActionArea>
+            <CardMedia component="img" image={show.image.medium} />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {show.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
+                continents except Antarctica
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary" role={"button"}>
+              Dettagli Show
+            </Button>
+          </CardActions>
+      </Link>
+        </Grid>
     );
+  });
+  return (
+    <>
+      <Grid container flexDirection="column" justifyContent="center" alignItems="center">
+        {listOfResults}
+      </Grid>
+    </>
+  );
 };
