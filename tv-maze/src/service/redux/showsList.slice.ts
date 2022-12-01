@@ -1,9 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ref, onValue } from "firebase/database";
-import { database } from "../firebase/firebase.init";
 
 export type TodoItemType = {
-    key:number;
+    key: number;
 };
 
 type ShowsListType = {
@@ -11,7 +9,7 @@ type ShowsListType = {
 };
 
 const initialState: ShowsListType = {
-    showsList : {},
+    showsList: {},
 };
 
 const showsListReducer = createSlice({
@@ -19,7 +17,7 @@ const showsListReducer = createSlice({
     initialState,
     reducers: {
         retrieveShows: (state, action) => {
-            state.showsList = action.payload
+            state.showsList = action.payload;
         },
     },
 });

@@ -15,5 +15,5 @@ let uiConfig = {
 
 let ui = new firebaseui.auth.AuthUI(auth);
 
-export { auth , ui , uiConfig }
+export { ui , uiConfig }
 

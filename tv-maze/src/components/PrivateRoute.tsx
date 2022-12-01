@@ -7,20 +7,26 @@ import { retrieveShows } from "../service/redux/showsList.slice";
 import { onValue, ref } from "firebase/database";
 import { database } from "../service/firebase/firebase.init";
 import { Container } from "@mui/material";
+import { NavigationMenu } from "./NavigationMenu";
 
 export const PrivateRoute = () => {
     const dispatch = useDispatch();
     const currentUser = useContext(AuthContext);
-    const { uid } = currentUser;
     if (!!currentUser) {
-        const userListofShows = ref(database, "users/" + uid );
-            onValue(userListofShows, (snapshot) => {
-                if(snapshot.exists()){
-                    dispatch(retrieveShows(snapshot.val()));
-                }
-            });
-        
-        return <Container><Outlet /></Container>;
+        const { uid } = currentUser;
+        const userListofShows = ref(database, "users/" + uid);
+        onValue(userListofShows, (snapshot) => {
+            if (snapshot.exists()) {
+                dispatch(retrieveShows(snapshot.val()));
+            }
+        });
+
+        return (
+            <Container>
+                <NavigationMenu />
+                <Outlet />
+            </Container>
+        );
     }
     return <Navigate to="login" />;
 };
