@@ -37,7 +37,8 @@ export const DetailResult = ({ id }: PropsType) => {
             if (showsList[key] === Number(id)) {
                 setAddToPrefer(true);
                 setKeyShow(key);
-            } else {
+                return
+            }else {
                 setAddToPrefer(false);
             }
         }

@@ -9,18 +9,10 @@ export const InputForm = () => {
 
     const setQuery = useCallback((query:string)=> {
         setCurrentSearch({search : query})
-<<<<<<< HEAD
     },[setCurrentSearch])
 
     const url = ()=>{
         return currentSearch.get("search")?.trim() || ""}
-=======
-    }, [setCurrentSearch])
-
-    const url = ()=>{
-        return currentSearch.get("search")?.trim() || ""
-    }
->>>>>>> a156ecbf8588bb04faa013e02704db099b83ea67
 
     
     

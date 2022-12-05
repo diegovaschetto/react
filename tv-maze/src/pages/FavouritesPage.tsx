@@ -13,9 +13,9 @@ export const FavouritesPage = () => {
     useEffect(() => {
         let keys = [];
         for (const key in showsList) {
-            if(key === "default"){
+            if (key === "default") {
                 setKeyArr(keys);
-                return        
+                return;
             }
             keys.push(showsList[key]);
         }
