@@ -17,7 +17,7 @@ export const Home = () => {
     useEffect(() => {
         if (search) {
             callToApi(search).then((mappedData: ResultsMapped[]) => mappedData.length ? setAllResults(mappedData) : setAllResults([]));
-            setStoreKey(store.getState().showsListReducer.showsList);
+            setStoreKey(store.getState().showsListReducer?.showsList);
           }
     }, [search]);
 
