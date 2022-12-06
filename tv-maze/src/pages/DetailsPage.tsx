@@ -7,7 +7,7 @@ export const DetailsPage = () => {
     
     return (
         <>
-            <DetailResult id={id!} />
+            <DetailResult id={Number(id)} page={"details"}/>
         </>
     );
 };

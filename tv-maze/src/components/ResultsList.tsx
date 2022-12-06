@@ -11,20 +11,22 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ResultsMapped } from "../service/api.service";
+import { ShowsList } from "../service/redux/showsList.slice";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 interface PropsType {
-    allResults: any;
-    storeKey: any;
+    allResults: ResultsMapped[];
+    storeKey: Partial<ShowsList>;
 }
 
 export const ResultsList = ({ allResults, storeKey }: PropsType) => {
+
     const listOfResults = allResults.map((show: ResultsMapped, index: number) => {
         let favoriteIcon = <FavoriteBorderIcon />;
-        for (const keyId in storeKey) {
-            if (storeKey[keyId] === show.id) favoriteIcon = <FavoriteIcon />;
+        for (const key in storeKey) {
+            if (storeKey[key] === show.id) favoriteIcon = <FavoriteIcon />;
         }
         const detailsSegment = show.id.toString();
         return (
@@ -41,7 +43,7 @@ export const ResultsList = ({ allResults, storeKey }: PropsType) => {
                         </CardContent>
                         <CardMedia component="img" image={show.image.medium? show.image.medium: "https://placeholder.pics/svg/300/DEDEDE/555555/Not%20Found" } />
                     </CardActionArea>
-                    <Link to={`./${detailsSegment}`}>
+                    <Link to={`/details/${detailsSegment}`}>
                         <CardActions>
                             <Button size="small" color="primary" role={"button"}>
                                 More Details

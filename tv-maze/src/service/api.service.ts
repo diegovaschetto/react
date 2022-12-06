@@ -36,7 +36,7 @@ export const callToApi = async (textSearch: string) => {
     return mappedData;
 };
 
-export const callToApiDetails = async (id: string) => {
+export const callToApiDetails = async (id: number) => {
     const urlBaseDetails = "https://api.tvmaze.com/shows/";
 
     const response = await fetch(urlBaseDetails + id);

@@ -4,16 +4,18 @@ import { AuthContext } from "./AuthProvider";
 import { callToApiDetails, ResultMapped } from "../service/api.service";
 import { RootState } from "../service/redux/store";
 
-import { addToPreferList, removeToPreferlist} from "../service/firebase/firebase.db";
+import { addToPreferList , removeToPreferlist} from "../service/firebase/firebase.db";
 import { useSelector } from "react-redux";
 
 interface PropsType {
-    id: string;
+    id: number;
+    page: string
 }
 
-export const DetailResult = ({ id }: PropsType) => {
+
+export const DetailResult = ({ id , page  }: PropsType) => {
     const [resultData, setResultData] = useState<ResultMapped>();
-    const [keyShow, setKeyShow] = useState("");
+    const [keyShows, setKeyShows] = useState("");
     const [addToPrefer, setAddToPrefer] = useState(false);
 
     const currentUser = useContext(AuthContext);
@@ -27,7 +29,7 @@ export const DetailResult = ({ id }: PropsType) => {
     });
 
     useEffect(() => {
-        callToApiDetails(id!).then((response) => {
+        callToApiDetails(id).then((response) => {
             setResultData(response);
         });
     }, []);
@@ -36,7 +38,7 @@ export const DetailResult = ({ id }: PropsType) => {
         for (const key in showsList) {
             if (showsList[key] === Number(id)) {
                 setAddToPrefer(true);
-                setKeyShow(key);
+                setKeyShows(key)
                 return
             }else {
                 setAddToPrefer(false);
@@ -48,7 +50,6 @@ export const DetailResult = ({ id }: PropsType) => {
         <>
             <Card
                 sx={{
-                    my: "30px",
                     mx: "auto",
                     width: {
                         xs: "90%",
@@ -79,20 +80,20 @@ export const DetailResult = ({ id }: PropsType) => {
                     </Typography>
                 </CardContent>
                 <Box sx={{ textAlign: "center", mb: "30px" }}>
-                    {!addToPrefer && (
+                    {!addToPrefer && page==="details" && (
                         <Button
                             variant="contained"
                             sx={{ width: { xs: "80%", md: "50%" } }}
-                            onClick={() => addToPreferList(uid, resultData?.id!)}
+                            onClick={() => uid && addToPreferList(uid, resultData?.id!)}
                         >
                             Add to favourite
                         </Button>
                     )}
-                    {addToPrefer && (
+                    {addToPrefer && page==="details" && (
                         <Button
                             sx={{ width: { xs: "80%", md: "50%" } }}
                             variant="contained"
-                            onClick={() => removeToPreferlist(uid, keyShow!)}
+                            onClick={() => uid && removeToPreferlist(uid, keyShows)}
                         >
                             Remove from favorite
                         </Button>

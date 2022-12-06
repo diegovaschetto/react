@@ -4,14 +4,15 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { callToApi, ResultsMapped } from "../service/api.service";
 import { store } from "../service/redux/store";
+import { ShowsList } from "../service/redux/showsList.slice";
 
 export const Home = () => {
     const [searchParams, setSearchParams] = useSearchParams({ search: "" });
     const { search } = useParams();
     const navigate = useNavigate();
-    const [storeKey , setStoreKey] = useState()
+    const [storeKey , setStoreKey] = useState<Partial<ShowsList>>({})
 
-    const [allResults, setAllResults] = useState<any>([]);
+    const [allResults, setAllResults] = useState<ResultsMapped[]>([]);
 
     useEffect(() => {
         if (search) {
@@ -36,8 +37,8 @@ export const Home = () => {
 
     return (
         <>
-            <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled()} />
-            {allResults.length ? <ResultsList allResults={allResults} storeKey={storeKey} /> : <p>nessun risultato</p>}
+            <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled} />
+            {allResults.length ? <ResultsList allResults={allResults} storeKey={storeKey} /> : <p></p>}
         </>
     );
 };

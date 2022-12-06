@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type TodoItemType = {
-    key: number;
+export type ShowsList = {
+    [key: string]: number;
 };
 
-type ShowsListType = {
-    showsList: any;
+export type ShowsListType = {
+    showsList: Partial<ShowsList>
 };
 
 const initialState: ShowsListType = {
