@@ -16,7 +16,6 @@ export const PrivateRoute = () => {
 
     const userListofShows = ref(database, "users/" + uid);
     const userListofWatching = ref(database, "watching/" + uid);
-
     onValue(userListofShows, (snapshot) => {
       if (snapshot.exists()) {
         dispatch(retrieveShows(snapshot.val()));

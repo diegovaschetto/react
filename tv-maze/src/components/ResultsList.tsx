@@ -15,19 +15,22 @@ import { ShowsList } from "../service/redux/showsList.slice";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface PropsType {
   allResults: ResultsMapped[];
   storeKey: Partial<ShowsList>;
+  watching: Partial<ShowsList>;
 }
 
-export const ResultsList = ({ allResults, storeKey }: PropsType) => {
+export const ResultsList = ({ allResults, storeKey , watching }: PropsType) => {
   const listOfResults = allResults.map((show: ResultsMapped, index: number) => {
     let favoriteIcon = <FavoriteBorderIcon />;
     for (const key in storeKey) {
       if (storeKey[key] === show.id) favoriteIcon = <FavoriteIcon />;
     }
     const detailsSegment = show.id.toString();
+    
     return (
       <Grid item xs={10} sm={6} md={3} key={index}>
         <Card variant="outlined">
@@ -39,6 +42,7 @@ export const ResultsList = ({ allResults, storeKey }: PropsType) => {
               <Tooltip title="Added to Prefer" arrow>
                 {favoriteIcon}
               </Tooltip>
+            {watching[Object.keys(watching)[0]] === show.id && <RemoveRedEyeIcon/>}
             </CardContent>
             <CardMedia
               component="img"

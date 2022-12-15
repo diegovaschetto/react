@@ -17,6 +17,7 @@ export const DetailsPage = () => {
         let keys:number[] = [];
         for (const key in watchingList) {
           if (key === "default") {
+            setIdArr([])
             return;
           }
           keys.push(watchingList[key]!);
@@ -26,7 +27,7 @@ export const DetailsPage = () => {
 
     return (
         <>
-            <DetailResult watching={idArr} id={Number(id)} page={"details"}/>
+            <DetailResult watching={idArr} id={Number(id)} page={"details"} keyWatching={Object.keys(watchingList)[0]}/>
         </>
     );
 };

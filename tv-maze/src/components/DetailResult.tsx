@@ -10,10 +10,11 @@ import { useSelector } from "react-redux";
 interface PropsType {
   id: number;
   page: string;
-  watching?: number[]
+  watching?: number[];
+  keyWatching?:string
 }
 
-export const DetailResult = ({ id, page , watching }: PropsType) => {
+export const DetailResult = ({ id, page , watching , keyWatching }: PropsType) => {
   const [resultData, setResultData] = useState<ResultMapped>();
   const [keyShows, setKeyShows] = useState("");
   const [addToPrefer, setAddToPrefer] = useState(false);
@@ -25,7 +26,7 @@ export const DetailResult = ({ id, page , watching }: PropsType) => {
   let summary = dom.body.textContent!;
 
   const showsList = useSelector((state: RootState) => {
-    return state.showsListReducer.showsList;
+    return state.showsListReducer?.showsList;
   });
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export const DetailResult = ({ id, page , watching }: PropsType) => {
                     sx={{ width: { xs: "80%", md: "50%" } }}
                     variant="contained"
                     className="!mt-3"
-                    onClick={() => uid && removeNowWatching(uid, keyShows)}
+                    onClick={() => uid && keyWatching && removeNowWatching(uid, keyWatching)}
                   >
                     Remove from watch 
                   </Button>)

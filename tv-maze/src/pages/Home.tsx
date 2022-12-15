@@ -3,17 +3,23 @@ import { ResultsList } from "../components/ResultsList";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { callToApi, ResultsMapped } from "../service/api.service";
-import { store } from "../service/redux/store";
+import { RootState, store } from "../service/redux/store";
 import { ShowsList } from "../service/redux/showsList.slice";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams({ search: "" });
   const { search } = useParams();
   const navigate = useNavigate();
   const [storeKey, setStoreKey] = useState<Partial<ShowsList>>({});
-  const [searchInput, setSearchInput] = useState<any>();
+
+  const [searchInput, setSearchInput] = useState<string>();
 
   const [allResults, setAllResults] = useState<ResultsMapped[]>([]);
+
+  const watching = useSelector((state: RootState) => {
+    return state.showsListReducer.watching;
+  });
 
   useEffect(() => {
     if (search) {
@@ -33,7 +39,7 @@ export const Home = () => {
     setSearchInput(searchParams.get("search")?.trim());
     navigate(`/${searchParams.get("search")?.trim()}`);
   };
-
+  
   const handleDisabled = () => {
     return searchParams.get("search")?.trim().length === 0;
   };
@@ -42,7 +48,7 @@ export const Home = () => {
     <>
       <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled} />
       {allResults.length ? (
-        <ResultsList allResults={allResults} storeKey={storeKey} />
+        <ResultsList allResults={allResults} watching={watching} storeKey={storeKey} />
       ) : !searchInput ? (
         <p></p>
       ) : (
