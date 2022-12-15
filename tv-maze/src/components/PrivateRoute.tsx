@@ -1,21 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 import { useDispatch } from "react-redux";
 
-import { retrieveShows } from "../service/redux/showsList.slice";
+import { retrieveShows, watchingShows } from "../service/redux/showsList.slice";
 import { onValue, ref } from "firebase/database";
 import { database } from "../service/firebase/firebase.init";
-import {
-  Container,
-  createTheme,
-  IconButton,
-  PaletteMode,
-  ThemeProvider,
-} from "@mui/material";
-import { NavigationMenu } from "./NavigationMenu";
-
-
 
 export const PrivateRoute = () => {
   const dispatch = useDispatch();
@@ -23,24 +13,23 @@ export const PrivateRoute = () => {
 
   if (!!currentUser) {
     const { uid } = currentUser;
+
     const userListofShows = ref(database, "users/" + uid);
+    const userListofWatching = ref(database, "watching/" + uid);
+
     onValue(userListofShows, (snapshot) => {
       if (snapshot.exists()) {
         dispatch(retrieveShows(snapshot.val()));
       }
     });
 
-    return (
-      
-        <Container
-          sx={{ bgcolor: "background.default", m: 0, pb:"100px" }}
-          className="!max-w-none min-h-screen"
-        >
-          <NavigationMenu />
-          <Outlet />
-        </Container>
-     
-    );
+    onValue(userListofWatching, (snapshot) => {
+      if (snapshot.exists()) {
+        dispatch(watchingShows(snapshot.val()));
+      }
+    });
+
+    return <Outlet />;
   }
   return <Navigate to="login" />;
 };

@@ -1,12 +1,4 @@
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Paper,
-} from "@mui/material";
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -20,13 +12,7 @@ export const SearchForm = (props: PropsType) => {
   const { onChange, onSubmit, isDisabled } = props;
   return (
     <>
-      <Paper
-        component={"form"}
-        elevation={0}
-        className="flex justify-center py-15"
-        noValidate
-        onSubmit={onSubmit}
-      >
+      <Paper component={"form"} elevation={0} className="flex justify-center" noValidate onSubmit={onSubmit}>
         <FormControl className="w-full md:w-2/4" variant="outlined">
           <InputLabel htmlFor="search">Find show</InputLabel>
           <OutlinedInput

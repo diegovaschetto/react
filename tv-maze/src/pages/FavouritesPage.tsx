@@ -26,7 +26,13 @@ export const FavouritesPage = () => {
   ));
   return (
     <>
-      <div className="py-10 pb-20">{shows}</div>
+    {shows.length? <div className="py-10 space-y-5 pb-20">{shows}</div> :  <div
+          className="p-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
+          role="alert"
+        >
+          Nessun preferito aggiunto
+        </div> }
+      
     </>
   );
 };

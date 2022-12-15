@@ -23,3 +23,27 @@ export const removeToPreferlist = (userId: string, keyShow: string) => {
         });
     });
 };
+
+
+export const addNowWatching = (userId: string, tvShowId: number) => {
+    get(ref(database, "watching/" + userId)).then((snapshot) => {
+        if (snapshot.exists()) {
+            if (!snapshot.val().default) {
+                remove(child(ref(database, "watching/" + userId), "default"));
+            }
+        }
+    });
+    push(ref(database, "watching/" + userId), tvShowId);
+};
+
+export const removeNowWatching = (userId: string, keyShow: string) => {
+    remove(child(ref(database, "watching/" + userId), keyShow)).then(() => {
+        get(ref(database, "watching/" + userId)).then((snapshot) => {
+            if (!snapshot.exists()) {
+                set(ref(database, "watching/" + userId), {
+                    default: 0,
+                });
+            }
+        });
+    });
+};

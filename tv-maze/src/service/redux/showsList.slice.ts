@@ -6,10 +6,12 @@ export type ShowsList = {
 
 export type ShowsListType = {
     showsList: Partial<ShowsList>
+    watching : {[key: string]: number};
 };
 
 const initialState: ShowsListType = {
     showsList: {},
+    watching : {}
 };
 
 const showsListReducer = createSlice({
@@ -19,8 +21,11 @@ const showsListReducer = createSlice({
         retrieveShows: (state, action) => {
             state.showsList = action.payload;
         },
+        watchingShows: (state, action) => {
+            state.watching = action.payload;
+        },
     },
 });
 
-export const { retrieveShows } = showsListReducer.actions;
+export const { retrieveShows , watchingShows } = showsListReducer.actions;
 export default showsListReducer.reducer;
