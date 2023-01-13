@@ -5,34 +5,32 @@ import { auth } from "../service/firebase/firebase.init";
 import { CircularProgress } from "@mui/material";
 
 interface PropType {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 interface CurrentUser {
-  uid: string;
+    uid: string;
 }
 
 export const AuthContext = createContext<Partial<CurrentUser>>({});
 
 export const AuthProvider = (prop: PropType) => {
-  const [currentUser, setCurrentUser] = useState<Partial<CurrentUser>>({});
-  const [pending, setPending] = useState(true);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user!);
-      setPending(false);
-    });
-  }, []);
+    const [currentUser, setCurrentUser] = useState<Partial<CurrentUser>>({});
+    const [pending, setPending] = useState(true);
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user!);
+            setPending(false);
+        });
+    }, []);
 
-  if (pending) {
-    return <CircularProgress className="absolute top-1/2 left-1/2" />;
-  }
+    if (pending) {
+        return <CircularProgress className="absolute top-1/2 left-1/2" />;
+    }
 
-  return (
-    <>
-      <AuthContext.Provider value={currentUser}>
-        {prop.children}
-      </AuthContext.Provider>
-    </>
-  );
+    return (
+        <>
+            <AuthContext.Provider value={currentUser}>{prop.children}</AuthContext.Provider>
+        </>
+    );
 };

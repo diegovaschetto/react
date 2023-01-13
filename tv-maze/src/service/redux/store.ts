@@ -4,7 +4,7 @@ import showsListSlice from "./showsList.slice";
 
 export const store = configureStore({
     reducer: {
-        showsListReducer : showsListSlice
+        showsListReducer: showsListSlice,
     },
 });
 

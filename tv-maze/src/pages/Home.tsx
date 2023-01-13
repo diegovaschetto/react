@@ -8,57 +8,60 @@ import { ShowsList } from "../service/redux/showsList.slice";
 import { useSelector } from "react-redux";
 
 export const Home = () => {
-  const [searchParams, setSearchParams] = useSearchParams({ search: "" });
-  const { search } = useParams();
-  const navigate = useNavigate();
-  const [storeKey, setStoreKey] = useState<Partial<ShowsList>>({});
+    const [searchParams, setSearchParams] = useSearchParams({ search: "" });
+    const { search } = useParams();
+    const navigate = useNavigate();
+    const [storeKey, setStoreKey] = useState<Partial<ShowsList>>({});
 
-  const [searchInput, setSearchInput] = useState<string>();
+    const [searchInput, setSearchInput] = useState<string>();
+    const [pending, setPending] = useState(true);
 
-  const [allResults, setAllResults] = useState<ResultsMapped[]>([]);
+    const [allResults, setAllResults] = useState<ResultsMapped[]>([]);
 
-  const watching = useSelector((state: RootState) => {
-    return state.showsListReducer.watching;
-  });
+    const watching = useSelector((state: RootState) => {
+        return state.showsListReducer.watching;
+    });
 
-  useEffect(() => {
-    if (search) {
-      callToApi(search).then((mappedData: ResultsMapped[]) =>
-        mappedData.length ? setAllResults(mappedData) : setAllResults([])
-      );
-      setStoreKey(store.getState().showsListReducer?.showsList);
-    }
-  }, [search]);
+    useEffect(() => {
+        if (search) {
+            callToApi(search).then((mappedData: ResultsMapped[]) => {
+                mappedData.length ? setAllResults(mappedData) : setAllResults([]);
+                setPending(false);
+            });
+            setStoreKey(store.getState().showsListReducer?.showsList);
+        }
+    }, [search]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchParams({ search: event.target.value });
-  };
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchParams({ search: event.target.value });
+    };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearchInput(searchParams.get("search")?.trim());
-    navigate(`/${searchParams.get("search")?.trim()}`);
-  };
-  
-  const handleDisabled = () => {
-    return searchParams.get("search")?.trim().length === 0;
-  };
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setPending(true);
+        setSearchInput(searchParams.get("search")?.trim());
+        navigate(`/${searchParams.get("search")?.trim()}`);
+    };
 
-  return (
-    <>
-      <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled} />
-      {allResults.length ? (
-        <ResultsList allResults={allResults} watching={watching} storeKey={storeKey} />
-      ) : !searchInput ? (
-        <p></p>
-      ) : (
-        <div
-          className="p-4 my-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
-          role="alert"
-        >
-          Nessun risultato per questa ricerca
-        </div>
-      )}
-    </>
-  );
+    const handleDisabled = () => {
+        return searchParams.get("search")?.trim().length === 0;
+    };
+
+    return (
+        <>
+            <SearchForm onChange={handleChange} onSubmit={handleSubmit} isDisabled={handleDisabled} />
+            {allResults.length ? (
+                <ResultsList allResults={allResults} watching={watching} storeKey={storeKey} />
+            ) : !searchInput || pending ? (
+                <p></p>
+            ) : (
+                <div
+                    className="p-4 my-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
+                    role="alert"
+                >
+                    Nessun risultato per questa ricerca
+                </div>
+            )}
+        </>
+    );
 };

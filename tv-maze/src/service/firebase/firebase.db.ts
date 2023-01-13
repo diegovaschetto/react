@@ -24,7 +24,6 @@ export const removeToPreferlist = (userId: string, keyShow: string) => {
     });
 };
 
-
 export const addNowWatching = (userId: string, tvShowId: number) => {
     get(ref(database, "watching/" + userId)).then((snapshot) => {
         if (snapshot.exists()) {

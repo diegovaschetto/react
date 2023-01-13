@@ -5,13 +5,13 @@ export type ShowsList = {
 };
 
 export type ShowsListType = {
-    showsList: Partial<ShowsList>
-    watching : {[key: string]: number};
+    showsList: Partial<ShowsList>;
+    watching: { [key: string]: number };
 };
 
 const initialState: ShowsListType = {
     showsList: {},
-    watching : {}
+    watching: JSON.parse(localStorage.getItem("watching")!) || {},
 };
 
 const showsListReducer = createSlice({
@@ -23,9 +23,10 @@ const showsListReducer = createSlice({
         },
         watchingShows: (state, action) => {
             state.watching = action.payload;
+            localStorage.setItem("watching", JSON.stringify(action.payload));
         },
     },
 });
 
-export const { retrieveShows , watchingShows } = showsListReducer.actions;
+export const { retrieveShows, watchingShows } = showsListReducer.actions;
 export default showsListReducer.reducer;
