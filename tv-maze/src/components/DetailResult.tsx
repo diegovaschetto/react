@@ -85,7 +85,7 @@ export const DetailResult = ({ id, page, watching, keyWatching }: PropsType) => 
                         {summary !== "null" ? summary : <p>Summary not avaible</p>}
                     </Typography>
                 </CardContent>
-                <Box sx={{ textAlign: "center", mb: "30px" }}>
+                <Box className="lg:flex lg:flex-col lg:items-center" sx={{ textAlign: "center", mb: "30px" }}>
                     {!addToPrefer && page === "details" && (
                         <Button
                             variant="contained"

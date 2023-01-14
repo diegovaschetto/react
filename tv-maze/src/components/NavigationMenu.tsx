@@ -28,9 +28,10 @@ export const NavigationMenu = () => {
                         bgcolor: "background.default",
                     }}
                     showLabels
-                    value={value}
+                    value={JSON.parse(localStorage.getItem("currentPage")!) || value}
                     onChange={(_event, newValue) => {
                         setValue(newValue);
+                        localStorage.setItem("currentPage", newValue);
                     }}
                 >
                     <BottomNavigationAction onClick={() => navigate("home")} label="Home" icon={<HomeIcon />} />

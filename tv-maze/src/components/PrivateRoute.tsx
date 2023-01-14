@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 import { useDispatch } from "react-redux";
 
-import { retrieveShows, watchingShows } from "../service/redux/showsList.slice";
+import { retrieveShows, watchingShows, watchingTrend } from "../service/redux/showsList.slice";
 import { onValue, ref } from "firebase/database";
 import { database } from "../service/firebase/firebase.init";
 
@@ -25,6 +25,12 @@ export const PrivateRoute = () => {
         onValue(userListofWatching, (snapshot) => {
             if (snapshot.exists()) {
                 dispatch(watchingShows(snapshot.val()));
+            }
+        });
+
+        onValue(ref(database, "watching"), (snapshot) => {
+            if (snapshot.exists()) {
+                dispatch(watchingTrend(snapshot.val()));
             }
         });
 

@@ -1,12 +1,12 @@
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container, createTheme, IconButton, PaletteMode, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 export const Theme = () => {
-    const [modeTheme, setModeTheme] = useState<PaletteMode>("light");
+    const [modeTheme, setModeTheme] = useState<PaletteMode>(localStorage.getItem("theme") || "light");
     const theme = useMemo(
         () =>
             createTheme({
@@ -16,6 +16,10 @@ export const Theme = () => {
             }),
         [modeTheme]
     );
+
+    useEffect(() => {
+        localStorage.setItem("theme", modeTheme);
+    }, [modeTheme]);
 
     const toggleColorMode = () => {
         setModeTheme((prevMode: string) => (prevMode === "light" ? "dark" : "light"));
