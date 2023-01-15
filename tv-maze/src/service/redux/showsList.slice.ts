@@ -4,10 +4,14 @@ export type ShowsList = {
     [key: string]: number;
 };
 
+interface WatchingTrend {
+    [key: string]: ShowsList;
+}
+
 export type ShowsListType = {
     showsList: Partial<ShowsList>;
     watching: { [key: string]: number };
-    watchingTrend: any;
+    watchingTrend: WatchingTrend;
 };
 
 const initialState: ShowsListType = {

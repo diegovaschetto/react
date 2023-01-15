@@ -8,11 +8,11 @@ import { callToApiDetails } from "../service/api.service";
 export const NowWatching = () => {
     const watchingList = useSelector((state: RootState) => state.showsListReducer.watching);
     const watchingTrend = useSelector((state: RootState) => state.showsListReducer.watchingTrend);
-    const [trendFilmToPrint, setTrendFilmToPrint] = useState<any>([]);
-    const [trendValueToPrint, setTrendValueToPrint] = useState<any>([]);
+    const [trendFilmToPrint, setTrendFilmToPrint] = useState<string[]>([]);
+    const [trendValueToPrint, setTrendValueToPrint] = useState<number[]>([]);
 
     async function filterTrends() {
-        let trend: any = [];
+        let trend: number[] = [];
         for (const key in watchingTrend) {
             if ("default" in watchingTrend[key]) {
                 continue;
@@ -20,7 +20,7 @@ export const NowWatching = () => {
 
             trend = [...trend, ...Object.values(watchingTrend[key])];
         }
-        let counterTrend: any = {};
+        let counterTrend: { [key: string]: number } = {};
         for (const film of trend) {
             await callToApiDetails(film).then((response) => {
                 const { name } = response;
@@ -43,7 +43,7 @@ export const NowWatching = () => {
     return (
         <>
             <div className="flex flex-col items-center space-y-3 my-10 md:items-start">
-                {trendFilmToPrint.map((current: any, index: number) => (
+                {trendFilmToPrint.map((current: string, index: number) => (
                     <p key={index}>
                         <span className="text-xl">{current}</span> lo stanno guardando in {trendValueToPrint[index]}{" "}
                         persone
