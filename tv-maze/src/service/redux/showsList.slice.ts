@@ -17,8 +17,8 @@ export type ShowsListType = {
 
 const initialState: ShowsListType = {
     showsList: {},
-    watching: (await getDBWatchigData(true)) || {},
-    watchingTrend: (await getDBWatchigData(false)) || {},
+    watching: (await getDBWatchigData()) || {},
+    watchingTrend: {},
 };
 
 const showsListReducer = createSlice({

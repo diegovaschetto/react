@@ -1,4 +1,4 @@
-import { database, auth } from "./firebase.init";
+import { database } from "./firebase.init";
 import { ref, push, remove, child, get, set } from "firebase/database";
 
 export const addToPreferList = (userId: string, tvShowId: number) => {
@@ -47,17 +47,16 @@ export const removeNowWatching = (userId: string, keyShow: string) => {
     });
 };
 
-export const getDBWatchigData = async (type: boolean) => {
+export const getDBWatchigData = async () => {
     let data: any = {};
-    let refData: any = {};
+
     const user = localStorage.getItem("uid");
 
-    refData = type ? ref(database, "watching/" + user) : ref(database, "watching/");
-
-    await get(refData).then((snapshot) => {
+    await get(ref(database, "watching/" + user)).then((snapshot) => {
         if (snapshot.exists()) {
             data = snapshot.val();
         }
     });
+
     return data;
 };
