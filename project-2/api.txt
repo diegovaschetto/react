@@ -1,2 +1,0 @@
-generics : https://api.tvmaze.com/search/shows?q=
-details : https://api.tvmaze.com/shows/
