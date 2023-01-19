@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getDBWatchigData } from "../firebase/firebase.db";
 
 export type ShowsList = {
     [key: string]: number;
 };
 
-interface WatchingTrend {
+export interface WatchingTrend {
     [key: string]: ShowsList;
 }
 
@@ -16,8 +17,8 @@ export type ShowsListType = {
 
 const initialState: ShowsListType = {
     showsList: {},
-    watching: JSON.parse(localStorage.getItem("watching")!) || {},
-    watchingTrend: JSON.parse(localStorage.getItem("watchingTrend")!) || {},
+    watching: (await getDBWatchigData(true)) || {},
+    watchingTrend: (await getDBWatchigData(false)) || {},
 };
 
 const showsListReducer = createSlice({
@@ -29,11 +30,9 @@ const showsListReducer = createSlice({
         },
         watchingShows: (state, action) => {
             state.watching = action.payload;
-            localStorage.setItem("watching", JSON.stringify(action.payload));
         },
         watchingTrend: (state, action) => {
             state.watchingTrend = action.payload;
-            localStorage.setItem("watchingTrend", JSON.stringify(action.payload));
         },
     },
 });

@@ -20,6 +20,7 @@ export const AuthProvider = (prop: PropType) => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             setCurrentUser(user!);
+            localStorage.setItem("uid", user?.uid!);
             setPending(false);
         });
     }, []);
